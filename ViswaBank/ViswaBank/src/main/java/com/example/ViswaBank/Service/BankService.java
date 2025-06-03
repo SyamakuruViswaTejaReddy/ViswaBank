@@ -19,4 +19,28 @@ public class BankService {
     public List<Bank> getEmployees() {
         return bankRepository.findAll();
     }
+
+    public Bank getEmployeeById(Long id) {
+        return bankRepository.findById(id).get();
+    }
+
+    public Bank updateEmployeeByID(long id) {
+        Bank oldEmp=bankRepository.findById(id).get();
+        Bank newEmp=new Bank();
+        newEmp.setDesignation(oldEmp.getDesignation());
+        newEmp.setEmployeeBranch(oldEmp.getEmployeeBranch());
+        newEmp.setEmployeeDepartment(oldEmp.getEmployeeDepartment());
+        newEmp.setEmployeeName(oldEmp.getEmployeeName());
+        newEmp.setSalary(oldEmp.getSalary());
+        return bankRepository.save(newEmp);
+    }
+
+    public Boolean deleteEmployeeID(long id) {
+        if(bankRepository.existsById(id)) {
+            bankRepository.deleteById(id);
+            return true;
+        }
+        else
+            return false;
+    }
 }
